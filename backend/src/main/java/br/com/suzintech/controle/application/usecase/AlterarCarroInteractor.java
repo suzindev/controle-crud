@@ -5,11 +5,11 @@ import br.com.suzintech.controle.domain.Carro;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class AdicionarCarroInteractor {
+public class AlterarCarroInteractor {
 
     private final CarroGateway carroGateway;
 
-    public String execute(Carro carro) {
-        return carroGateway.create(carro);
+    public String execute(Carro carro, Long id) {
+        return carroGateway.update(carro, id);
     }
 }

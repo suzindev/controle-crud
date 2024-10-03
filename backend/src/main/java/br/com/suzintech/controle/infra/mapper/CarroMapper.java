@@ -4,7 +4,9 @@ import br.com.suzintech.controle.domain.Carro;
 import br.com.suzintech.controle.infra.controller.request.CarroRequest;
 import br.com.suzintech.controle.infra.controller.response.CarroResponse;
 import br.com.suzintech.controle.infra.persistence.entity.CarroEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CarroMapper {
 
     public CarroEntity toEntity(Carro dto) {
