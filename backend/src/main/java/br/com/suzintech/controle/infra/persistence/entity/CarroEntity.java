@@ -3,6 +3,8 @@ package br.com.suzintech.controle.infra.persistence.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Builder
 @Getter
 @Setter
@@ -22,4 +24,16 @@ public class CarroEntity {
 
     @Column(name = "ano", nullable = false)
     private Integer ano;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_marca", referencedColumnName = "id", nullable = false)
+    private MarcaEntity marca;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tb_carro_proprietario",
+            joinColumns = @JoinColumn(name = "id_carro", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_proprietario", referencedColumnName = "id")
+    )
+    private List<ProprietarioEntity> proprietarios;
 }

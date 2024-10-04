@@ -1,4 +1,4 @@
-package br.com.suzintech.controle.application.usecase;
+package br.com.suzintech.controle.application.usecase.carro;
 
 import br.com.suzintech.controle.application.gateway.CarroGateway;
 import lombok.RequiredArgsConstructor;

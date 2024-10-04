@@ -1,6 +1,7 @@
 package br.com.suzintech.controle.infra.service;
 
 import br.com.suzintech.controle.application.gateway.CarroGateway;
+import br.com.suzintech.controle.commom.Constants;
 import br.com.suzintech.controle.domain.Carro;
 import br.com.suzintech.controle.exception.CrudException;
 import br.com.suzintech.controle.infra.mapper.CarroMapper;
@@ -20,32 +21,58 @@ public class CarroService implements CarroGateway {
     @Override
     public String create(Carro carro) {
         try {
-//            var entity = mapper.toEntity(carro);
-//            var savedEntity = repository.save(entity);
+            repository.save(mapper.toEntity(carro));
 
-            return "Carro salvo com sucesso!";
+            return Constants.REGISTRO_SALVO.getValue();
         } catch (Exception e) {
-            throw new CrudException("Erro ao salvar o registro: " + e.getMessage());
+            throw new CrudException(e.getMessage());
         }
     }
 
     @Override
     public String update(Carro carro, Long id) {
-        return "";
+        try {
+            var dto = findById(id);
+
+            repository.save(mapper.toEntity(dto));
+
+            return Constants.REGISTRO_ATUALIZADO.getValue();
+        } catch (Exception e) {
+            throw new CrudException(e.getMessage());
+        }
     }
 
     @Override
     public String delete(Long id) {
-        return "";
+        try {
+            repository.deleteById(id);
+
+            return Constants.REGISTRO_DELETADO.getValue();
+        } catch (Exception e) {
+            throw new CrudException(e.getMessage());
+        }
     }
 
     @Override
     public List<Carro> findAll() {
-        return List.of();
+        try {
+            return repository.findAll().stream()
+                    .map(mapper::toDTO)
+                    .toList();
+        } catch (Exception e) {
+            throw new CrudException(e.getMessage());
+        }
     }
 
     @Override
     public Carro findById(Long id) {
-        return null;
+        try {
+            var entity = repository.findById(id)
+                    .orElseThrow(() -> new CrudException(Constants.REGISTRO_NAO_ENCONTRADO.getValue()));
+
+            return mapper.toDTO(entity);
+        } catch (Exception e) {
+            throw new CrudException(e.getMessage());
+        }
     }
 }
