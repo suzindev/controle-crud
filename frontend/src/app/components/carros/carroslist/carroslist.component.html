@@ -1,17 +1,42 @@
-<table border="1">
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Marca</th>
-    </tr>
-  </thead>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary btn-rounded" mdbRipple routerLink="admin/carros/new">
+              Adicionar
+            </button>
+          </div>
 
-  <tbody>
-    @for (carro of lista; track $index) {
-    <tr>
-      <td>{{carro.nome}}</td>
-      <td>{{carro.marca}}</td>
-    </tr>
-    }
-  </tbody>
-</table>
+          <table class="tabela table align-middle mb-0 bg-white">
+            <thead class="bg-light">
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th class="d-flex justify-content-center">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of lista; track $index) {
+              <tr>
+                <td>{{item.id}}</td>
+                <td>{{item.nome}}</td>
+                <td class="d-flex justify-content-sm-center">
+                  <button type="button" class="btn btn-primary btn-rounded" mdbRipple
+                    routerLink="admin/carros/edit/{{item.id}}">
+                    Editar
+                  </button>
+                  <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="deletar()">
+                    Deletar
+                  </button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
