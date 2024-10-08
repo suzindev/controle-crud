@@ -1,35 +1,69 @@
-import { Component } from '@angular/core';
-import { Carro } from '../../../models/carro';
+import { Carro } from './../../../models/carro';
+import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
+import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { CarroService } from '../../../services/carro.service';
 
 @Component({
   selector: 'app-carroslist',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, MdbModalModule],
   templateUrl: './carroslist.component.html',
   styleUrl: './carroslist.component.scss'
 })
 export class CarroslistComponent {
   lista: Carro[] = [];
 
+  carroService = inject(CarroService);
+
   constructor() {
-    let carro1: Carro = new Carro();
-    carro1.id = 1;
-    carro1.nome = "Fiesta";
+    this.findAll();
 
-    let carro2: Carro = new Carro();
-    carro2.id = 1;
-    carro2.nome = "Uno";
+    let carroNovo = history.state.carroNovo;
+    let carroEditado = history.state.carroEditado;
 
-    let carro3: Carro = new Carro();
-    carro3.id = 1;
-    carro3.nome = "Gol";
+    if (carroNovo) {
+      carroNovo.id = 555;
+      this.lista.push(carroNovo);
+    }
 
-    this.lista.push(carro1);
-    this.lista.push(carro2);
-    this.lista.push(carro3);
+    if (carroEditado) {
+      let indice = this.lista.findIndex(x => { return x.id == carroEditado.id });
+      this.lista[indice] = carroEditado;
+    }
   }
 
-  deletar() { }
+  findAll() {
+    this.carroService.findAll().subscribe({
+      next: lista => {
+        this.lista = lista;
+      },
+      error: erro => {
+        alert("Ocorreu um erro.");
+      },
+    });
+  }
+
+  deletar(carro: Carro) {
+    Swal.fire({
+      title: 'Tem certeza que deseja deletar este registro?',
+      icon: 'warning',
+      showDenyButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let indice = this.lista.findIndex(x => { return x.id == carro.id });
+        this.lista.splice(indice, 1);
+
+        Swal.fire({
+          title: 'Deletado com sucesso!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+  }
 }
