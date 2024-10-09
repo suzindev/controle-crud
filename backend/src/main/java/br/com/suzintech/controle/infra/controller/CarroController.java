@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/carro")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class CarroController {
 
     private final AdicionarCarroInteractor adicionarCarroInteractor;
@@ -42,7 +43,7 @@ public class CarroController {
     ResponseEntity<String> delete(@PathVariable Long id) {
         var obj = removerCarroInteractor.execute(id);
 
-        return new ResponseEntity<>(obj, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
     @GetMapping

@@ -1,11 +1,11 @@
 package br.com.suzintech.controle.infra.service;
 
-import br.com.suzintech.controle.application.gateway.CarroGateway;
+import br.com.suzintech.controle.application.gateway.MarcaGateway;
 import br.com.suzintech.controle.commom.Constants;
-import br.com.suzintech.controle.domain.Carro;
+import br.com.suzintech.controle.domain.Marca;
 import br.com.suzintech.controle.exception.CrudException;
-import br.com.suzintech.controle.infra.mapper.CarroMapper;
-import br.com.suzintech.controle.infra.persistence.repository.CarroRepository;
+import br.com.suzintech.controle.infra.mapper.MarcaMapper;
+import br.com.suzintech.controle.infra.persistence.repository.MarcaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +13,15 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CarroService implements CarroGateway {
+public class MarcaService implements MarcaGateway {
 
-    private final CarroRepository repository;
-    private final CarroMapper mapper;
+    private final MarcaRepository repository;
+    private final MarcaMapper mapper;
 
     @Override
-    public String create(Carro carro) {
+    public String create(Marca marca) {
         try {
-            repository.save(mapper.toEntity(carro));
+            repository.save(mapper.toEntity(marca));
 
             return Constants.REGISTRO_SALVO.getValue();
         } catch (Exception e) {
@@ -30,11 +30,11 @@ public class CarroService implements CarroGateway {
     }
 
     @Override
-    public String update(Carro carro, Long id) {
+    public String update(Marca marca, Long id) {
         try {
             findById(id);
 
-            repository.save(mapper.toEntity(new Carro(id, carro.nome(), carro.ano())));
+            repository.save(mapper.toEntity(new Marca(id, marca.nome())));
 
             return Constants.REGISTRO_ATUALIZADO.getValue();
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class CarroService implements CarroGateway {
     }
 
     @Override
-    public List<Carro> findAll() {
+    public List<Marca> findAll() {
         try {
             return repository.findAll().stream()
                     .map(mapper::toDTO)
@@ -65,7 +65,7 @@ public class CarroService implements CarroGateway {
     }
 
     @Override
-    public Carro findById(Long id) {
+    public Marca findById(Long id) {
         try {
             var entity = repository.findById(id)
                     .orElseThrow(() -> new CrudException(Constants.REGISTRO_NAO_ENCONTRADO.getValue()));

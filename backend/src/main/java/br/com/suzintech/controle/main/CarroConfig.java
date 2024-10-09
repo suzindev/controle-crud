@@ -9,27 +9,27 @@ import org.springframework.context.annotation.Configuration;
 public class CarroConfig {
 
     @Bean
-    AdicionarCarroInteractor createUseCase(CarroGateway gateway) {
+    AdicionarCarroInteractor createCarroUseCase(CarroGateway gateway) {
         return new AdicionarCarroInteractor(gateway);
     }
 
     @Bean
-    AlterarCarroInteractor updateUseCase(CarroGateway gateway) {
+    AlterarCarroInteractor updateCarroUseCase(CarroGateway gateway) {
         return new AlterarCarroInteractor(gateway);
     }
 
     @Bean
-    RemoverCarroInteractor deleteUseCase(CarroGateway gateway) {
+    RemoverCarroInteractor deleteCarroUseCase(CarroGateway gateway) {
         return new RemoverCarroInteractor(gateway);
     }
 
     @Bean
-    ConsultarTodosCarroInteractor getAllUseCase(CarroGateway gateway) {
+    ConsultarTodosCarroInteractor getAllCarroUseCase(CarroGateway gateway) {
         return new ConsultarTodosCarroInteractor(gateway);
     }
 
     @Bean
-    ConsultarCarroPorIdInteractor getByIdUseCase(CarroGateway gateway) {
+    ConsultarCarroPorIdInteractor getByIdCarroUseCase(CarroGateway gateway) {
         return new ConsultarCarroPorIdInteractor(gateway);
     }
 }
