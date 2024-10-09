@@ -20,19 +20,6 @@ export class CarroslistComponent {
 
   constructor() {
     this.findAll();
-
-    let carroNovo = history.state.carroNovo;
-    let carroEditado = history.state.carroEditado;
-
-    if (carroNovo) {
-      carroNovo.id = 555;
-      this.lista.push(carroNovo);
-    }
-
-    if (carroEditado) {
-      let indice = this.lista.findIndex(x => { return x.id == carroEditado.id });
-      this.lista[indice] = carroEditado;
-    }
   }
 
   findAll() {
@@ -41,7 +28,11 @@ export class CarroslistComponent {
         this.lista = lista;
       },
       error: erro => {
-        alert("Ocorreu um erro.");
+        Swal.fire({
+          title: 'Ocorreu um erro',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       },
     });
   }
@@ -55,13 +46,23 @@ export class CarroslistComponent {
       cancelButtonText: 'Não'
     }).then((result) => {
       if (result.isConfirmed) {
-        let indice = this.lista.findIndex(x => { return x.id == carro.id });
-        this.lista.splice(indice, 1);
+        this.carroService.delete(carro.id).subscribe({
+          next: mensagem => {
+            Swal.fire({
+              title: mensagem,
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
 
-        Swal.fire({
-          title: 'Deletado com sucesso!',
-          icon: 'success',
-          confirmButtonText: 'OK'
+            this.findAll();
+          },
+          error: erro => {
+            Swal.fire({
+              title: 'Ocorreu um erro',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
         });
       }
     });

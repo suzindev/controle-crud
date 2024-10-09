@@ -12,6 +12,11 @@
             <label mdbLabel class="form-label" for="carroNome">Nome</label>
           </mdb-form-control>
 
+          <mdb-form-control class="mb-4">
+            <input mdbInput type="number" id="carroAno" class="form-control" [(ngModel)]="carro.ano" />
+            <label mdbLabel class="form-label" for="carroAno">Ano</label>
+          </mdb-form-control>
+
           <div class="d-grid gap-2">
             <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="save()">Salvar</button>
           </div>

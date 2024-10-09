@@ -16,4 +16,20 @@ export class CarroService {
   findAll(): Observable<Carro[]> {
     return this.http.get<Carro[]>(this.API);
   }
+
+  delete(id: number): Observable<string> {
+    return this.http.delete<string>(this.API + "/" + id, { responseType: 'text' as 'json' });
+  }
+
+  save(carro: Carro): Observable<string> {
+    return this.http.post<string>(this.API, carro, { responseType: 'text' as 'json' });
+  }
+
+  update(carro: Carro, id: number): Observable<string> {
+    return this.http.put<string>(this.API + "/" + id, carro, { responseType: 'text' as 'json' });
+  }
+
+  findById(id: number): Observable<Carro> {
+    return this.http.get<Carro>(this.API + "/" + id);
+  }
 }
