@@ -5,11 +5,13 @@
         <div class="card-body">
           <h3 class="card-title">Listagem de marcas</h3>
 
+          @if (!enableButton) {
           <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="new()">
               Adicionar
             </button>
           </div>
+          }
 
           <table class="tabela table align-middle mb-0 bg-white">
             <thead class="bg-light">
@@ -25,12 +27,18 @@
                 <td>{{item.id}}</td>
                 <td>{{item.nome}}</td>
                 <td class="d-flex justify-content-sm-center">
+                  @if (enableButton) {
+                  <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="select(item)">
+                    Selecionar
+                  </button>
+                  }@else {
                   <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="edit(item)">
                     Editar
                   </button>
                   <button type="button" class="btn btn-danger btn-rounded" mdbRipple (click)="deletar(item)">
                     Deletar
                   </button>
+                  }
                 </td>
               </tr>
               }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MdbModalModule, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { Marca } from '../../../models/marca';
@@ -17,6 +17,9 @@ import { MarcasdetailsComponent } from '../marcasdetails/marcasdetails.component
 export class MarcaslistComponent {
   lista: Marca[] = [];
   marcaEdit: Marca = new Marca();
+
+  @Input("enableButton") enableButton: boolean = false;
+  @Output("retorno") retorno = new EventEmitter<any>();
 
   modalService = inject(MdbModalService);
   @ViewChild('modalMarcaDetalhe') modalMarcaDetalhe!: TemplateRef<any>;
@@ -82,6 +85,10 @@ export class MarcaslistComponent {
   edit(marca: Marca) {
     this.marcaEdit = Object.assign({}, marca);
     this.modalRef = this.modalService.open(this.modalMarcaDetalhe)
+  }
+
+  select(marca: Marca) {
+    this.retorno.emit(marca);
   }
 
   retornoMarcaDetalhe() {
