@@ -2,7 +2,6 @@ package br.com.suzintech.controle.infra.controller;
 
 import br.com.suzintech.controle.application.usecase.carro.*;
 import br.com.suzintech.controle.domain.Carro;
-import br.com.suzintech.controle.infra.controller.request.CarroRequest;
 import br.com.suzintech.controle.infra.mapper.CarroMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,15 +25,15 @@ public class CarroController {
     private final CarroMapper mapper;
 
     @PostMapping
-    ResponseEntity<String> create(@RequestBody CarroRequest request) {
-        var obj = adicionarCarroInteractor.execute(mapper.toDTO(request));
+    ResponseEntity<String> create(@RequestBody Carro request) {
+        var obj = adicionarCarroInteractor.execute(request);
 
         return new ResponseEntity<>(obj, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<String> update(@RequestBody CarroRequest request, @PathVariable Long id) {
-        var obj = alterarCarroInteractor.execute(mapper.toDTO(request), id);
+    ResponseEntity<String> update(@RequestBody Carro request, @PathVariable Long id) {
+        var obj = alterarCarroInteractor.execute(request, id);
 
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }

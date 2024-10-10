@@ -21,7 +21,12 @@ public class CarroService implements CarroGateway {
     @Override
     public String create(Carro carro) {
         try {
-            repository.save(mapper.toEntity(carro));
+            repository.save(mapper.toEntity(
+                    new Carro(
+                            carro.nome(),
+                            carro.ano(),
+                            carro.marca())
+            ));
 
             return Constants.REGISTRO_SALVO.getValue();
         } catch (Exception e) {
@@ -34,7 +39,13 @@ public class CarroService implements CarroGateway {
         try {
             findById(id);
 
-            repository.save(mapper.toEntity(new Carro(id, carro.nome(), carro.ano())));
+            repository.save(mapper.toEntity(
+                    new Carro(
+                            id,
+                            carro.nome(),
+                            carro.ano(),
+                            carro.marca())
+            ));
 
             return Constants.REGISTRO_ATUALIZADO.getValue();
         } catch (Exception e) {

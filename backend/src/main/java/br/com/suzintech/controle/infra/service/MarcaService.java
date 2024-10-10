@@ -21,7 +21,7 @@ public class MarcaService implements MarcaGateway {
     @Override
     public String create(Marca marca) {
         try {
-            repository.save(mapper.toEntity(marca));
+            repository.save(mapper.toEntity(new Marca(marca.nome())));
 
             return Constants.REGISTRO_SALVO.getValue();
         } catch (Exception e) {
