@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class CarroMapper {
 
     private final MarcaMapper marcaMapper;
+    private final AcessorioMapper acessorioMapper;
 
     public CarroEntity toEntity(Carro dto) {
         return CarroEntity.builder()
@@ -17,6 +18,9 @@ public class CarroMapper {
                 .nome(dto.nome())
                 .ano(dto.ano())
                 .marca(marcaMapper.toEntity(dto.marca()))
+                .acessorios(dto.acessorios().stream()
+                        .map(acessorioMapper::toEntity)
+                        .toList())
                 .build();
     }
 
@@ -25,7 +29,10 @@ public class CarroMapper {
                 entity.getId(),
                 entity.getNome(),
                 entity.getAno(),
-                marcaMapper.toDTO(entity.getMarca())
+                marcaMapper.toDTO(entity.getMarca()),
+                entity.getAcessorios().stream()
+                        .map(acessorioMapper::toDTO)
+                        .toList()
         );
     }
 }

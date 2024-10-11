@@ -9,8 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_proprietario")
-public class ProprietarioEntity {
+@Table(name = "tb_acessorio")
+public class AcessorioEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,4 @@ public class ProprietarioEntity {
 
     @Column(name = "nome", length = 80, nullable = false)
     private String nome;
-
-    @Column(name = "idade", nullable = false)
-    private Integer idade;
 }

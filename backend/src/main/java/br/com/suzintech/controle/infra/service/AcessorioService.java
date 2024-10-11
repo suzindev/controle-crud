@@ -1,11 +1,11 @@
 package br.com.suzintech.controle.infra.service;
 
-import br.com.suzintech.controle.application.gateway.CarroGateway;
+import br.com.suzintech.controle.application.gateway.AcessorioGateway;
 import br.com.suzintech.controle.commom.Constants;
-import br.com.suzintech.controle.domain.Carro;
+import br.com.suzintech.controle.domain.Acessorio;
 import br.com.suzintech.controle.exception.CrudException;
-import br.com.suzintech.controle.infra.mapper.CarroMapper;
-import br.com.suzintech.controle.infra.persistence.repository.CarroRepository;
+import br.com.suzintech.controle.infra.mapper.AcessorioMapper;
+import br.com.suzintech.controle.infra.persistence.repository.AcessorioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,21 +13,15 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CarroService implements CarroGateway {
+public class AcessorioService implements AcessorioGateway {
 
-    private final CarroRepository repository;
-    private final CarroMapper mapper;
+    private final AcessorioRepository repository;
+    private final AcessorioMapper mapper;
 
     @Override
-    public String create(Carro carro) {
+    public String create(Acessorio acessorio) {
         try {
-            repository.save(mapper.toEntity(
-                    new Carro(
-                            carro.nome(),
-                            carro.ano(),
-                            carro.marca(),
-                            carro.acessorios())
-            ));
+            repository.save(mapper.toEntity(new Acessorio(acessorio.nome())));
 
             return Constants.REGISTRO_SALVO.getValue();
         } catch (Exception e) {
@@ -36,18 +30,11 @@ public class CarroService implements CarroGateway {
     }
 
     @Override
-    public String update(Carro carro, Long id) {
+    public String update(Acessorio acessorio, Long id) {
         try {
             findById(id);
 
-            repository.save(mapper.toEntity(
-                    new Carro(
-                            id,
-                            carro.nome(),
-                            carro.ano(),
-                            carro.marca(),
-                            carro.acessorios())
-            ));
+            repository.save(mapper.toEntity(new Acessorio(id, acessorio.nome())));
 
             return Constants.REGISTRO_ATUALIZADO.getValue();
         } catch (Exception e) {
@@ -67,7 +54,7 @@ public class CarroService implements CarroGateway {
     }
 
     @Override
-    public List<Carro> findAll() {
+    public List<Acessorio> findAll() {
         try {
             return repository.findAll().stream()
                     .map(mapper::toDTO)
@@ -78,7 +65,7 @@ public class CarroService implements CarroGateway {
     }
 
     @Override
-    public Carro findById(Long id) {
+    public Acessorio findById(Long id) {
         try {
             var entity = repository.findById(id)
                     .orElseThrow(() -> new CrudException(Constants.REGISTRO_NAO_ENCONTRADO.getValue()));

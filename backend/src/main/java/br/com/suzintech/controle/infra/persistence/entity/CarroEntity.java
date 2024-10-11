@@ -31,9 +31,9 @@ public class CarroEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "tb_carro_proprietario",
+            name = "tb_carro_acessorio",
             joinColumns = @JoinColumn(name = "id_carro", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_proprietario", referencedColumnName = "id")
+            inverseJoinColumns = @JoinColumn(name = "id_acessorio", referencedColumnName = "id")
     )
-    private List<ProprietarioEntity> proprietarios;
+    private List<AcessorioEntity> acessorios;
 }
