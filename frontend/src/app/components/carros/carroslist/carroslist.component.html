@@ -16,7 +16,9 @@
               <tr>
                 <th>#</th>
                 <th>Nome</th>
-                <th class="d-flex justify-content-center">Ações</th>
+                <th>Ano</th>
+                <th>Marca</th>
+                <th style="text-align: center">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -24,8 +26,14 @@
               <tr>
                 <td>{{item.id}}</td>
                 <td>{{item.nome}}</td>
+                <td>{{item.ano}}</td>
+                @if (item.marca) {
+                <td>{{item.marca.nome}}</td>
+                }@else {
+                <td>---</td>
+                }
                 <td class="d-flex justify-content-sm-center">
-                  <button type="button" class="btn btn-primary btn-rounded" mdbRipple
+                  <button type="button" class="btn btn-secondary btn-rounded" mdbRipple
                     routerLink="/admin/carros/edit/{{item.id}}">
                     Editar
                   </button>

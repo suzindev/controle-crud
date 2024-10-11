@@ -1,3 +1,4 @@
+import { Acessorio } from "./acessorio";
 import { Marca } from "./marca";
 
 export class Carro {
@@ -5,4 +6,5 @@ export class Carro {
   nome!: string;
   ano!: number;
   marca!: Marca;
+  acessorios: Acessorio[] = [];
 }

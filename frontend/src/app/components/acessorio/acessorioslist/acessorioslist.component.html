@@ -3,7 +3,7 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-body">
-          <h3 class="card-title">Listagem de marcas</h3>
+          <h3 class="card-title">Listagem de acessórios</h3>
 
           @if (!enableButton) {
           <div class="d-flex justify-content-end">
@@ -50,12 +50,12 @@
   </div>
 </div>
 
-<ng-template #modalMarcaDetalhe>
+<ng-template #modalAcessorioDetalhe>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Cadastro de marca</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Cadastro de acessório</h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
   </div>
   <div class="modal-body">
-    <app-marcasdetails [marca]="marcaEdit" (retorno)="retornoMarcaDetalhe()"></app-marcasdetails>
+    <app-acessoriosdetails [acessorio]="acessorioEdit" (retorno)="retornoAcessorioDetalhe()"></app-acessoriosdetails>
   </div>
 </ng-template>
