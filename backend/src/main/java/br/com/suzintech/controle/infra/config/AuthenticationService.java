@@ -36,9 +36,12 @@ public class AuthenticationService implements UserDetailsService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             return JWT.create()
-                    .withIssuer("auth-api")
+                    .withIssuer("controle-service")
                     .withSubject(entity.getUsername())
                     .withExpiresAt(gerarDataExpiracao())
+                    .withClaim("username", entity.getUsername())
+                    .withClaim("id", entity.getId())
+                    .withClaim("role", entity.getRole())
                     .sign(algorithm);
         } catch (JWTCreationException e) {
             throw new JWTCreationException("Erro ao tentar gerar o token.", e);
@@ -50,7 +53,7 @@ public class AuthenticationService implements UserDetailsService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             return JWT.require(algorithm)
-                    .withIssuer("auth-api")
+                    .withIssuer("controle-service")
                     .build()
                     .verify(token)
                     .getSubject();
