@@ -29,7 +29,11 @@ export class LoginComponent {
       next: token => {
         if (token) {
           this.loginService.addToken(token);
-          this.router.navigate(['/admin/carros']);
+          if (this.loginService.hasPermission("ADMIN")) {
+            this.router.navigate(['/admin/carros']);
+          } else {
+            this.router.navigate(['/admin/marcas']);
+          }
         } else {
           Swal.fire({
             title: 'Usuário ou senha incorretos!',
