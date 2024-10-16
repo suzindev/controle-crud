@@ -5,7 +5,8 @@ public enum Constants {
     REGISTRO_SALVO("Registro salvo com sucesso!"),
     REGISTRO_ATUALIZADO("Registro atualizado com sucesso!"),
     REGISTRO_DELETADO("Registro deletado com sucesso!"),
-    REGISTRO_NAO_ENCONTRADO("Registro não encontrado!");
+    REGISTRO_NAO_ENCONTRADO("Registro não encontrado!"),
+    USUARIO_NAO_ENCONTRADO("Usuário não encontrado.");
 
     private final String value;
 

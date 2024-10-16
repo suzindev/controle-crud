@@ -1,5 +1,8 @@
 package br.com.suzintech.controle.infra.config;
 
+import br.com.suzintech.controle.commom.Constants;
+import br.com.suzintech.controle.exception.CrudException;
+import br.com.suzintech.controle.infra.mapper.UsuarioMapper;
 import br.com.suzintech.controle.infra.persistence.entity.UsuarioEntity;
 import br.com.suzintech.controle.infra.persistence.repository.UsuarioRepository;
 import com.auth0.jwt.JWT;
@@ -26,9 +29,12 @@ public class AuthenticationService implements UserDetailsService {
 
     private final UsuarioRepository repository;
 
+    private final UsuarioMapper mapper;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByUsername(username);
+        return mapper.toUserDetails(repository.findByUsername(username)
+                .orElseThrow(() -> new CrudException(Constants.USUARIO_NAO_ENCONTRADO.getValue())));
     }
 
     public String gerarToken(UsuarioEntity entity) {

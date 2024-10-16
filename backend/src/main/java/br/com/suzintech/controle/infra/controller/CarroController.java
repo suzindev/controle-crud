@@ -6,6 +6,7 @@ import br.com.suzintech.controle.infra.mapper.CarroMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/carro")
 @RequiredArgsConstructor
 @CrossOrigin("*")
+@PreAuthorize("hasRole('ADMIN')")
 public class CarroController {
 
     private final AdicionarCarroInteractor adicionarCarroInteractor;
