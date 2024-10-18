@@ -7,21 +7,29 @@ import br.com.suzintech.controle.exception.CrudException;
 import br.com.suzintech.controle.infra.mapper.UsuarioMapper;
 import br.com.suzintech.controle.infra.persistence.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class UsuarioService implements UsuarioGateway {
+class UsuarioService implements UsuarioGateway {
 
     private final UsuarioRepository repository;
     private final UsuarioMapper mapper;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     public String create(Usuario usuario) {
         try {
-            repository.save(mapper.toEntity(new Usuario(usuario.username(), usuario.password(), usuario.role())));
+            repository.save(mapper.toEntity(new Usuario(
+                    usuario.username(),
+                    passwordEncoder.encode(usuario.password()),
+                    usuario.role())
+            ));
 
             return Constants.REGISTRO_SALVO.getValue();
         } catch (Exception e) {
@@ -32,9 +40,18 @@ public class UsuarioService implements UsuarioGateway {
     @Override
     public String update(Usuario usuario, Long id) {
         try {
-            findById(id);
+            var dto = findById(id);
+            var entity = mapper.toEntity(new Usuario(
+                    dto.id(),
+                    usuario.username(),
+                    dto.password(),
+                    usuario.role()));
 
-            repository.save(mapper.toEntity(new Usuario(id, usuario.username(), usuario.password(), usuario.role())));
+            if (Objects.nonNull(usuario.password()) && !passwordEncoder.matches(usuario.password(), dto.password())) {
+                entity.setPassword(passwordEncoder.encode(usuario.password()));
+            }
+
+            repository.save(entity);
 
             return Constants.REGISTRO_ATUALIZADO.getValue();
         } catch (Exception e) {

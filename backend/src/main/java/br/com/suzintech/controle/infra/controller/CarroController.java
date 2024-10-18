@@ -1,8 +1,10 @@
 package br.com.suzintech.controle.infra.controller;
 
+import br.com.suzintech.controle.infra.adapter.CarroAdapter;
 import br.com.suzintech.controle.application.usecase.carro.*;
 import br.com.suzintech.controle.domain.Carro;
-import br.com.suzintech.controle.infra.mapper.CarroMapper;
+import br.com.suzintech.controle.infra.controller.request.CarroRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,18 +26,18 @@ public class CarroController {
     private final ConsultarTodosCarroInteractor consultarTodosCarroInteractor;
     private final ConsultarCarroPorIdInteractor consultarCarroPorIdInteractor;
 
-    private final CarroMapper mapper;
+    private final CarroAdapter carroAdapter;
 
     @PostMapping
-    ResponseEntity<String> create(@RequestBody Carro request) {
-        var obj = adicionarCarroInteractor.execute(request);
+    ResponseEntity<String> create(@Valid @RequestBody CarroRequest request) {
+        var obj = adicionarCarroInteractor.execute(carroAdapter.from(request));
 
         return new ResponseEntity<>(obj, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<String> update(@RequestBody Carro request, @PathVariable Long id) {
-        var obj = alterarCarroInteractor.execute(request, id);
+    ResponseEntity<String> update(@Valid @RequestBody CarroRequest request, @PathVariable Long id) {
+        var obj = alterarCarroInteractor.execute(carroAdapter.from(request), id);
 
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }

@@ -1,12 +1,10 @@
 package br.com.suzintech.controle.infra.mapper;
 
 import br.com.suzintech.controle.domain.Usuario;
+import br.com.suzintech.controle.infra.config.CustomUserDetails;
+import br.com.suzintech.controle.infra.controller.request.UsuarioRequest;
 import br.com.suzintech.controle.infra.persistence.entity.UsuarioEntity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
-import java.util.Collection;
 
 @Component
 public class UsuarioMapper {
@@ -24,22 +22,20 @@ public class UsuarioMapper {
         return new Usuario(entity.getId(), entity.getUsername(), entity.getPassword(), entity.getRole());
     }
 
-    public UserDetails toUserDetails(UsuarioEntity entity) {
-        return new UserDetails() {
-            @Override
-            public Collection<? extends GrantedAuthority> getAuthorities() {
-                return entity.getAuthorities();
-            }
+    public CustomUserDetails toUserDetails(UsuarioEntity entity) {
+        return CustomUserDetails.builder()
+                .id(entity.getId())
+                .username(entity.getUsername())
+                .password(entity.getPassword())
+                .role(entity.getRole())
+                .build();
+    }
 
-            @Override
-            public String getPassword() {
-                return entity.getPassword();
-            }
-
-            @Override
-            public String getUsername() {
-                return entity.getUsername();
-            }
-        };
+    public Usuario toDTO(UsuarioRequest request) {
+        return new Usuario(
+                request.username(),
+                request.password(),
+                request.role()
+        );
     }
 }

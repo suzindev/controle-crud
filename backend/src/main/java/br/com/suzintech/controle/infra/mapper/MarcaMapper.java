@@ -1,6 +1,7 @@
 package br.com.suzintech.controle.infra.mapper;
 
 import br.com.suzintech.controle.domain.Marca;
+import br.com.suzintech.controle.infra.controller.request.MarcaRequest;
 import br.com.suzintech.controle.infra.persistence.entity.MarcaEntity;
 import org.springframework.stereotype.Component;
 
@@ -16,5 +17,9 @@ public class MarcaMapper {
 
     public Marca toDTO(MarcaEntity entity) {
         return new Marca(entity.getId(), entity.getNome());
+    }
+
+    public Marca toDTO(MarcaRequest request) {
+        return new Marca(request.nome());
     }
 }

@@ -3,7 +3,6 @@ package br.com.suzintech.controle.infra.config;
 import br.com.suzintech.controle.commom.Constants;
 import br.com.suzintech.controle.exception.CrudException;
 import br.com.suzintech.controle.infra.mapper.UsuarioMapper;
-import br.com.suzintech.controle.infra.persistence.entity.UsuarioEntity;
 import br.com.suzintech.controle.infra.persistence.repository.UsuarioRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -37,20 +36,20 @@ public class AuthenticationService implements UserDetailsService {
                 .orElseThrow(() -> new CrudException(Constants.USUARIO_NAO_ENCONTRADO.getValue())));
     }
 
-    public String gerarToken(UsuarioEntity entity) {
+    public String gerarToken(CustomUserDetails user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             return JWT.create()
                     .withIssuer("controle-service")
-                    .withSubject(entity.getUsername())
+                    .withSubject(user.getUsername())
                     .withExpiresAt(gerarDataExpiracao())
-                    .withClaim("username", entity.getUsername())
-                    .withClaim("id", entity.getId())
-                    .withClaim("role", entity.getRole())
+                    .withClaim("username", user.getUsername())
+                    .withClaim("id", user.getId())
+                    .withClaim("role", user.getRole())
                     .sign(algorithm);
         } catch (JWTCreationException e) {
-            throw new JWTCreationException("Erro ao tentar gerar o token.", e);
+            throw new JWTCreationException("Erro ao tentar gerar o token. ", e);
         }
     }
 

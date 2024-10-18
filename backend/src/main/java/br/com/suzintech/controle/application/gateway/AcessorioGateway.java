@@ -6,13 +6,15 @@ import java.util.List;
 
 public interface AcessorioGateway {
 
-    String create(Acessorio request);
+    String create(Acessorio acessorio);
 
-    String update(Acessorio request, Long id);
+    String update(Acessorio acessorio, Long id);
 
     String delete(Long id);
 
     List<Acessorio> findAll();
 
     Acessorio findById(Long id);
+
+    List<Acessorio> findByIds(List<Long> ids);
 }

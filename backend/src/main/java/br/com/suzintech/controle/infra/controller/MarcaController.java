@@ -2,6 +2,9 @@ package br.com.suzintech.controle.infra.controller;
 
 import br.com.suzintech.controle.application.usecase.marca.*;
 import br.com.suzintech.controle.domain.Marca;
+import br.com.suzintech.controle.infra.controller.request.MarcaRequest;
+import br.com.suzintech.controle.infra.mapper.MarcaMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,16 +24,18 @@ public class MarcaController {
     private final ConsultarTodosMarcaInteractor consultarTodosMarcaInteractor;
     private final ConsultarMarcaPorIdInteractor consultarMarcaPorIdInteractor;
 
+    private final MarcaMapper marcaMapper;
+
     @PostMapping
-    ResponseEntity<String> create(@RequestBody Marca request) {
-        var obj = adicionarMarcaInteractor.execute(request);
+    ResponseEntity<String> create(@Valid @RequestBody MarcaRequest request) {
+        var obj = adicionarMarcaInteractor.execute(marcaMapper.toDTO(request));
 
         return new ResponseEntity<>(obj, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<String> update(@RequestBody Marca request, @PathVariable Long id) {
-        var obj = alterarMarcaInteractor.execute(request, id);
+    ResponseEntity<String> update(@Valid @RequestBody MarcaRequest request, @PathVariable Long id) {
+        var obj = alterarMarcaInteractor.execute(marcaMapper.toDTO(request), id);
 
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }

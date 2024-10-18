@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CarroService implements CarroGateway {
+class CarroService implements CarroGateway {
 
     private final CarroRepository repository;
     private final CarroMapper mapper;

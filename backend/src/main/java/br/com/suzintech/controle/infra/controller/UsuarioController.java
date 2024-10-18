@@ -2,6 +2,9 @@ package br.com.suzintech.controle.infra.controller;
 
 import br.com.suzintech.controle.application.usecase.usuario.*;
 import br.com.suzintech.controle.domain.Usuario;
+import br.com.suzintech.controle.infra.controller.request.UsuarioRequest;
+import br.com.suzintech.controle.infra.mapper.UsuarioMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +26,18 @@ public class UsuarioController {
     private final ConsultarTodosUsuarioInteractor consultarTodosUsuarioInteractor;
     private final ConsultarUsuarioPorIdInteractor consultarUsuarioPorIdInteractor;
 
+    private final UsuarioMapper usuarioMapper;
+
     @PostMapping
-    ResponseEntity<String> create(@RequestBody Usuario request) {
-        var obj = adicionarUsuarioInteractor.execute(request);
+    ResponseEntity<String> create(@Valid @RequestBody UsuarioRequest request) {
+        var obj = adicionarUsuarioInteractor.execute(usuarioMapper.toDTO(request));
 
         return new ResponseEntity<>(obj, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<String> update(@RequestBody Usuario request, @PathVariable Long id) {
-        var obj = alterarUsuarioInteractor.execute(request, id);
+    ResponseEntity<String> update(@Valid @RequestBody UsuarioRequest request, @PathVariable Long id) {
+        var obj = alterarUsuarioInteractor.execute(usuarioMapper.toDTO(request), id);
 
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }

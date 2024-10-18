@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface CarroGateway {
 
-    String create(Carro request);
+    String create(Carro carro);
 
-    String update(Carro request, Long id);
+    String update(Carro carro, Long id);
 
     String delete(Long id);
 

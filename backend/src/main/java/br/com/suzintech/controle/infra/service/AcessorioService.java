@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AcessorioService implements AcessorioGateway {
+class AcessorioService implements AcessorioGateway {
 
     private final AcessorioRepository repository;
     private final AcessorioMapper mapper;
@@ -74,5 +74,12 @@ public class AcessorioService implements AcessorioGateway {
         } catch (Exception e) {
             throw new CrudException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<Acessorio> findByIds(List<Long> ids) {
+        return repository.findAllById(ids).stream()
+                .map(mapper::toDTO)
+                .toList();
     }
 }

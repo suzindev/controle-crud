@@ -2,6 +2,9 @@ package br.com.suzintech.controle.infra.controller;
 
 import br.com.suzintech.controle.application.usecase.acessorio.*;
 import br.com.suzintech.controle.domain.Acessorio;
+import br.com.suzintech.controle.infra.controller.request.AcessorioRequest;
+import br.com.suzintech.controle.infra.mapper.AcessorioMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,16 +24,18 @@ public class AcessorioController {
     private final ConsultarTodosAcessorioInteractor consultarTodosAcessorioInteractor;
     private final ConsultarAcessorioPorIdInteractor consultarAcessorioPorIdInteractor;
 
+    private final AcessorioMapper acessorioMapper;
+
     @PostMapping
-    ResponseEntity<String> create(@RequestBody Acessorio request) {
-        var obj = adicionarAcessorioInteractor.execute(request);
+    ResponseEntity<String> create(@Valid @RequestBody AcessorioRequest request) {
+        var obj = adicionarAcessorioInteractor.execute(acessorioMapper.toDTO(request));
 
         return new ResponseEntity<>(obj, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<String> update(@RequestBody Acessorio request, @PathVariable Long id) {
-        var obj = alterarAcessorioInteractor.execute(request, id);
+    ResponseEntity<String> update(@Valid @RequestBody AcessorioRequest request, @PathVariable Long id) {
+        var obj = alterarAcessorioInteractor.execute(acessorioMapper.toDTO(request), id);
 
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }

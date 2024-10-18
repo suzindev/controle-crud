@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface MarcaGateway {
 
-    String create(Marca request);
+    String create(Marca marca);
 
-    String update(Marca request, Long id);
+    String update(Marca marca, Long id);
 
     String delete(Long id);
 

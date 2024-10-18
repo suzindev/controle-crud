@@ -2,7 +2,7 @@ package br.com.suzintech.controle.infra.controller;
 
 import br.com.suzintech.controle.domain.Login;
 import br.com.suzintech.controle.infra.config.AuthenticationService;
-import br.com.suzintech.controle.infra.persistence.entity.UsuarioEntity;
+import br.com.suzintech.controle.infra.config.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class LoginController {
     ResponseEntity<String> login(@RequestBody Login request) {
         var userAuthenticationToken = new UsernamePasswordAuthenticationToken(request.username(), request.password());
         var auth = authenticationManager.authenticate(userAuthenticationToken);
-        var token = authenticationService.gerarToken((UsuarioEntity) auth.getPrincipal());
+        var token = authenticationService.gerarToken((CustomUserDetails) auth.getPrincipal());
 
         return new ResponseEntity<>(token, HttpStatus.OK);
     }

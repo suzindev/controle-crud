@@ -32,4 +32,9 @@ public class AcessorioConfig {
     ConsultarAcessorioPorIdInteractor getByIdAcessorioUseCase(AcessorioGateway gateway) {
         return new ConsultarAcessorioPorIdInteractor(gateway);
     }
+
+    @Bean
+    ConsultarAcessorioPorIdsInteractor getByIdsAcessorioUseCase(AcessorioGateway gateway) {
+        return new ConsultarAcessorioPorIdsInteractor(gateway);
+    }
 }

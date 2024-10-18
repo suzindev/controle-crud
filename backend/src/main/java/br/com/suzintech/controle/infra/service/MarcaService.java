@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MarcaService implements MarcaGateway {
+class MarcaService implements MarcaGateway {
 
     private final MarcaRepository repository;
     private final MarcaMapper mapper;

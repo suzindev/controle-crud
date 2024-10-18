@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface UsuarioGateway {
 
-    String create(Usuario request);
+    String create(Usuario usuario);
 
-    String update(Usuario request, Long id);
+    String update(Usuario usuario, Long id);
 
     String delete(Long id);
 

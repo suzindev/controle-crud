@@ -1,6 +1,7 @@
 package br.com.suzintech.controle.infra.mapper;
 
 import br.com.suzintech.controle.domain.Acessorio;
+import br.com.suzintech.controle.infra.controller.request.AcessorioRequest;
 import br.com.suzintech.controle.infra.persistence.entity.AcessorioEntity;
 import org.springframework.stereotype.Component;
 
@@ -16,5 +17,9 @@ public class AcessorioMapper {
 
     public Acessorio toDTO(AcessorioEntity entity) {
         return new Acessorio(entity.getId(), entity.getNome());
+    }
+
+    public Acessorio toDTO(AcessorioRequest request) {
+        return new Acessorio(request.nome());
     }
 }
