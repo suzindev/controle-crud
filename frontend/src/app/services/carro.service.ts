@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Carro } from '../models/carro';
 import { environment } from '../../environments/environment.development';
+import { toRequest } from '../mapper/carroMapper';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,15 @@ export class CarroService {
   }
 
   save(carro: Carro): Observable<string> {
-    return this.http.post<string>(this.API, carro, { responseType: 'text' as 'json' });
+    const request = toRequest(carro);
+
+    return this.http.post<string>(this.API, request, { responseType: 'text' as 'json' });
   }
 
   update(carro: Carro, id: number): Observable<string> {
-    return this.http.put<string>(this.API + "/" + id, carro, { responseType: 'text' as 'json' });
+    const request = toRequest(carro);
+
+    return this.http.put<string>(this.API + "/" + id, request, { responseType: 'text' as 'json' });
   }
 
   findById(id: number): Observable<Carro> {

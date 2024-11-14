@@ -1,11 +1,11 @@
 package br.com.suzintech.controle.infra.controller.request;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public record MarcaRequest(
         @NotBlank(message = "Este campo é obrigatório")
-        @Max(value = 80, message = "O valor máximo permitido é {value} caracteres")
+        @Size(max = 80, message = "O valor máximo permitido é {max} caracteres")
         String nome
 ) {
 }

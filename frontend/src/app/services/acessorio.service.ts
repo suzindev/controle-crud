@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Acessorio } from '../models/acessorio';
 import { environment } from '../../environments/environment.development';
+import { toRequest } from '../mapper/acessorioMapper';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,15 @@ export class AcessorioService {
   }
 
   save(acessorio: Acessorio): Observable<string> {
-    return this.http.post<string>(this.API, acessorio, { responseType: 'text' as 'json' });
+    const request = toRequest(acessorio);
+
+    return this.http.post<string>(this.API, request, { responseType: 'text' as 'json' });
   }
 
   update(acessorio: Acessorio, id: number): Observable<string> {
-    return this.http.put<string>(this.API + "/" + id, acessorio, { responseType: 'text' as 'json' });
+    const request = toRequest(acessorio);
+
+    return this.http.put<string>(this.API + "/" + id, request, { responseType: 'text' as 'json' });
   }
 
   findById(id: number): Observable<Acessorio> {

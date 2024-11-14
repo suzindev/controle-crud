@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Marca } from '../models/marca';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
+import { toRequest } from '../mapper/marcaMapper';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,15 @@ export class MarcaService {
   }
 
   save(marca: Marca): Observable<string> {
-    return this.http.post<string>(this.API, marca, { responseType: 'text' as 'json' });
+    const request = toRequest(marca);
+
+    return this.http.post<string>(this.API, request, { responseType: 'text' as 'json' });
   }
 
   update(marca: Marca, id: number): Observable<string> {
-    return this.http.put<string>(this.API + "/" + id, marca, { responseType: 'text' as 'json' });
+    const request = toRequest(marca);
+
+    return this.http.put<string>(this.API + "/" + id, request, { responseType: 'text' as 'json' });
   }
 
   findById(id: number): Observable<Marca> {
